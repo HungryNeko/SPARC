@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARC — Try it in your browser</title>
+<meta name="description" content="Compare two recordings in your browser: a small speaker model, voice-activity and language context, and SPARC calibration. Audio never leaves your device.">
+<meta name="color-scheme" content="light">
+<style>
+:root{--ink:#1d1d1f;--ink2:#424245;--rule:#d2d2d7;--gray:#f5f5f7;--blue:#0066cc;--green:#248a3d;--red:#c9342d;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.47 var(--font);letter-spacing:-.022em;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:980px;margin:0 auto;padding-left:22px;padding-right:22px}
+.nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:48px}
+.nav .brand{font-weight:600;font-size:19px;color:var(--ink)}
+.nav a.back{font-size:13px;color:var(--ink)}
+header{padding:80px 0 20px;text-align:center}
+h1{font-size:clamp(44px,8vw,72px);line-height:1.05;margin:0;font-weight:700;letter-spacing:-.015em}
+.lede{font-size:21px;color:var(--ink2);max-width:680px;margin:16px auto 0}
+.band.top{padding:40px 0 48px;margin-top:8px}
+.result{background:#fff;border-radius:22px;padding:26px 26px 22px;box-shadow:0 2px 24px rgba(0,0,0,.08);border:1px solid var(--rule)}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+@media (max-width:700px){.cols3{grid-template-columns:1fr}}
+.col{background:var(--gray);border-radius:16px;padding:16px 18px 14px}
+.col.sparc{background:#f2f7ff;outline:2px solid var(--blue)}
+.clabel{font-size:14px;font-weight:600;color:var(--ink2)}
+.cnum{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.cverdict{font-size:17px;font-weight:700;min-height:24px}
+.cverdict.same{color:var(--green)} .cverdict.diff{color:var(--red)}
+.cbar{position:relative;height:8px;background:#e4e4e8;border-radius:5px;margin:10px 0 8px;overflow:hidden}
+.cbar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ink);border-radius:5px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.cbar b{position:absolute;top:-2px;bottom:-2px;width:2px;background:#86868b}
+.scale{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink2);margin:-2px 0 8px}
+.cnum small{font-size:.42em;font-weight:600;color:var(--ink2);margin-left:4px;letter-spacing:0}
+.cnote{font-size:13px;color:var(--ink2)}
+.cbadge{display:inline-block;min-height:0;margin-top:4px;font-size:14px;font-weight:700;border-radius:980px;padding:0}
+.cbadge.yes{background:#e3f4e8;color:#1a6b30;padding:3px 12px}
+.cbadge.no{background:#fde8e6;color:#a3231c;padding:3px 12px}
+.truthline{display:inline-block;margin-left:8px;padding:3px 12px;border-radius:980px;background:var(--ink);color:#fff;font-size:13px}
+#delta{margin-top:16px;font-size:16px;font-weight:600}
+#delta .up{color:var(--green)} #delta .down{color:var(--red)}
+.pairname{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:12px}
+.band{padding:48px 0 72px}
+.band.gray{background:var(--gray)}
+.loader{max-width:560px;margin:28px auto 0;transition:opacity .6s}
+.loader.done{opacity:0;height:0;margin:0;overflow:hidden}
+.loader.alert{background:#fff4e5;border-radius:12px;padding:12px 16px}
+.loader.alert .lbar{display:none}
+.loader.alert #loadtext{color:#7a4a00}
+.lbar{height:6px;background:var(--gray);border-radius:4px;overflow:hidden}
+#loadbar{height:100%;width:0;background:var(--blue);transition:width .2s}
+#loadtext{font-size:14px;color:var(--ink2);margin-top:8px}
+h3.sub{font-size:21px;margin:8px 0 16px}
+h3.sub + .slots{margin-top:0}
+.exgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px}
+@media (max-width:700px){.exgrid{grid-template-columns:1fr}}
+.ex{background:var(--gray);border-radius:18px;padding:18px 20px;border:2px solid transparent}
+.ex.sel{border-color:var(--blue)}
+.exhead{font-weight:600;margin-bottom:8px}
+.clip{display:flex;align-items:center;gap:10px;margin:6px 0}
+.clip span{font-weight:600;color:var(--ink2);width:14px}
+.clip audio{flex:1;min-width:0;height:36px}
+.ex button{margin-top:10px}
+.pairname{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:12px}
+.ex button,.go{font:600 15px var(--font);border-radius:980px;padding:10px 18px;cursor:pointer;border:1px solid var(--rule);background:#fff;color:var(--ink)}
+.ex button:hover{border-color:var(--blue);color:var(--blue)}
+.go{background:var(--blue);border-color:var(--blue);color:#fff;padding:12px 26px;font-size:17px}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:700px){.slots{grid-template-columns:1fr}}
+.slot{background:var(--gray);border-radius:22px;padding:26px}
+.slot h3{margin:0 0 4px;font-size:21px}
+.slot .name{color:var(--ink2);font-size:15px;min-height:22px;margin-bottom:12px;overflow-wrap:anywhere}
+.filebtn{display:inline-block;font:600 15px var(--font);background:#fff;border:1px solid var(--rule);border-radius:980px;padding:9px 18px;cursor:pointer;color:var(--ink)}
+.filebtn:hover{border-color:var(--blue);color:var(--blue)}
+.slot audio{width:100%;margin-top:12px}
+.center{text-align:center}
+#status{color:var(--ink2);font-size:15px;margin-top:14px;min-height:22px}
+#status.alert{color:#7a4a00;background:#fff4e5;border-radius:12px;padding:12px 16px;display:block;max-width:640px;margin:16px auto 0}
+.result{margin:36px auto 0;max-width:760px;background:#fff;border-radius:22px;padding:30px 30px 26px;box-shadow:0 2px 20px rgba(0,0,0,.06)}
+.seg{display:inline-flex;background:var(--gray);border-radius:10px;padding:3px;gap:2px}
+.seg button{font:600 14px var(--font);border:0;background:none;color:var(--ink2);padding:7px 14px;border-radius:8px;cursor:pointer}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.seg button:disabled{opacity:.4;cursor:default}
+#verdict{font-size:40px;font-weight:700;margin:22px 0 4px;letter-spacing:-.01em}
+#verdict.same{color:var(--green)} #verdict.diff{color:var(--red)}
+#detail{color:var(--ink2);font-size:16px}
+.bar{height:10px;background:var(--gray);border-radius:6px;overflow:hidden;margin:18px 0 6px}
+#confbar{height:100%;background:var(--ink);border-radius:6px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+#confval{font-size:15px;font-weight:600}
+#truth,#ctx{font-size:15px;color:var(--ink2);margin-top:6px}
+h2{font-size:clamp(30px,4.6vw,44px);line-height:1.1;margin:0;text-align:center}
+.spec{margin:30px auto 0;max-width:760px;background:#fff;border-radius:22px;padding:8px 28px 22px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{font-size:13px;font-weight:600;color:var(--ink2);text-align:right;padding:16px 0 10px;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+td{padding:13px 0;border-bottom:1px solid var(--rule);text-align:right;font-variant-numeric:tabular-nums}
+th+th,td+td{padding-left:14px}
+tr:last-child td{border-bottom:0}
+tr.on td{font-weight:700}
+.tnote{font-size:14px;color:var(--ink2);margin:14px 0 0}
+.notice{max-width:760px;margin:22px auto 0;text-align:center;font-size:15px;color:var(--ink2)}
+.warn{margin-top:16px;padding:12px 14px;border-radius:12px;background:#fff4e5;color:#7a4a00;font-size:15px}
+.notes{max-width:760px;margin:26px auto 0;font-size:14px;color:var(--ink2)}
+.notes li{margin:6px 0}
+.byline{max-width:940px;margin:30px auto 0}
+.inst{display:flex;justify-content:center;align-items:center;gap:26px;min-height:46px;margin-bottom:40px}
+.inst img{height:40px;width:auto;display:block}
+.inst .rule{width:1px;align-self:stretch;background:var(--rule);margin:3px 0}
+.inst .sail{font:700 44px/1 var(--font);letter-spacing:-.015em;color:#990000}
+.authors{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin-top:26px;font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.authors sup{font-size:.6em;color:var(--blue);font-weight:600;margin-left:2px;letter-spacing:0}
+.byfoot{margin:0 0 20px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.affils{margin:0;font-size:13px;line-height:1.6;color:var(--ink2);text-align:left}
+.affils div{margin:2px 0}
+.affils sup,.bnote sup{color:var(--blue);font-weight:600;margin-right:3px}
+.bnote{font-size:13px;color:var(--ink2);margin:6px 0 0}
+@media (max-width:560px){.inst{flex-direction:column;gap:14px}.inst .rule{display:none}.authors{font-size:18px;gap:4px 18px}}
+footer{background:var(--gray);padding:26px 0 40px;font-size:13px;color:var(--ink2)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap"><span class="brand">SPARC</span><a class="back" href="./">Overview</a></div></nav>
+
+<header class="wrap">
+  <div class="inst"><img src="assets/usc.svg" alt="University of Southern California" onerror="this.remove()"><span class="rule"></span><span class="sail">SAIL</span></div>
+    <h1>Try it.</h1>
+  <p class="lede">Compare two recordings right in your browser. Nothing is uploaded — the models run on your device.</p>
+  <div class="byline">
+      <div class="authors"><span>Shi He<sup>a,1</sup></span><span>Xin Wei<sup>a,1,∗</sup></span><span>Huang-Cheng Chou<sup>b</sup></span><span>Sudarsana Reddy Kadiri<sup>b</sup></span><span>Shrikanth Narayanan<sup>b</sup></span></div>
+    </div>
+  <div class="loader" id="loader"><div class="lbar"><div id="loadbar"></div></div><div id="loadtext">Preparing…</div></div>
+</header>
+
+<section class="band top gray">
+  <div class="wrap">
+    <div class="result" id="result">
+      <div class="pairname" id="pairname">Add two recordings, or pick an example below, to see the scores</div>
+      <div class="cols3">
+        <div class="col" id="col-raw"><div class="clabel">Raw similarity score</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0 · unlike</span><span>100 · identical</span></div><div class="cnote">How alike the two voices sound. Not a probability.</div></div>
+        <div class="col" id="col-affine"><div class="clabel">Affine calibration</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0% · surely different</span><span>100% · surely same</span></div><div class="cnote">Chance of the same speaker, from the score alone.</div></div>
+        <div class="col sparc" id="col-sparc"><div class="clabel">SPARC</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0% · surely different</span><span>100% · surely same</span></div><div class="cnote">The same chance, also using duration, speech and language context.</div></div>
+      </div>
+      <div id="delta"></div>
+      <div id="ctx"></div>
+      <div id="truth"></div>
+      <div id="warn" class="warn" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h3 class="sub">Use your own recordings.</h3>
+    <div class="slots">
+      <div class="slot"><h3>Recording A</h3><div class="name" id="name0">No audio yet</div><label class="filebtn">Choose audio file<input type="file" id="file0" accept="audio/*" hidden></label><audio id="audio0" controls hidden></audio></div>
+      <div class="slot"><h3>Recording B</h3><div class="name" id="name1">No audio yet</div><label class="filebtn">Choose audio file<input type="file" id="file1" accept="audio/*" hidden></label><audio id="audio1" controls hidden></audio></div>
+    </div>
+    <p class="notice">This demo is calibrated on <strong>English read speech</strong> (LibriSpeech). Your own recordings in other languages, with noise or music, or shorter than a few seconds may be scored less reliably.</p>
+    <div class="center" style="margin-top:22px"><button class="go" id="go">Compare my recordings</button><div id="status"></div></div>
+    <h3 class="sub" style="margin-top:56px">Or try an example pair.</h3>
+    <div class="exgrid" id="examples"></div>
+  </div>
+</section>
+
+<section class="band gray">
+  <div class="wrap">
+    <h2>How each setting performs.</h2>
+    <div class="spec">
+      <table id="metrics">
+        <thead><tr><th>Setting</th><th>Accuracy</th><th>EER</th><th>C<sub>llr</sub></th><th>Calibration error</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="tnote">Measured once on <span id="ntest"></span> held-out LibriSpeech test trials with this pipeline. The language model was run at full precision for the table; the 8-bit version used in your browser changed SPARC log-likelihood ratios by a median of 0.013 and changed no decisions on 200 checked trials. Accuracy weights same- and different-speaker trials equally. C<sub>llr</sub> and calibration error need probabilities, so they do not apply to the raw score. Lower is better for EER, C<sub>llr</sub> and calibration error.</p>
+    </div>
+    <ul class="notes">
+      <li>The examples are LibriSpeech test pairs drawn at random, two from the same speaker and two from different speakers; they were not chosen for being easy.</li>
+      <li>Calibration was fitted on LibriSpeech development data (English read speech). Recordings from other conditions may be scored less reliably — calibration is specific to its target domain.</li>
+      <li>Speaker model: CAMPPlus (3D-Speaker, Apache-2.0). Voice activity: Silero VAD (MIT). Language: SpeechBrain VoxLingua107 ECAPA (Apache-2.0, 8-bit). Example audio: LibriSpeech (CC BY 4.0, Panayotov et al., 2015).</li>
+    </ul>
+  </div>
+</section>
+
+<footer><div class="wrap">
+    <div class="byfoot">
+      <div class="affils">
+        <div><sup>a</sup>University of Southern California, University Park Campus, Los Angeles, 90089, CA, USA</div>
+        <div><sup>b</sup>Signal Analysis and Interpretation Laboratory (SAIL), Ming Hsieh Department of Electrical and Computer Engineering, University of Southern California, 3740 McClintock Avenue, Los Angeles, 90089-2564, CA, USA</div>
+      </div>
+      <p class="bnote"><sup>1</sup>Joint first authors, equal contribution &nbsp;·&nbsp; <sup>∗</sup>Corresponding author</p>
+    </div>
+    SPARC · He, Wei, Chou, Kadiri, Narayanan · University of Southern California · demo calibration fitted for this page, not a study model · <a href="./">Overview</a></div></footer>
+
+<script src="demo/vendor/ort/ort.wasm.min.js"></script>
+<script src="demo/sparc-demo.js"></script>
+</body>
+</html>

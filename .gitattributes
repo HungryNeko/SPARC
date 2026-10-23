@@ -1,0 +1,6 @@
+# Keep LF in the repository so SOURCE_MANIFEST.json hashes match on every platform.
+* text=auto eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf

@@ -1,0 +1,452 @@
+{
+  "description": "Demo calibration for this page: CAMPPlus + automatic VAD and language context, fitted with the SPARC delivery code on LibriSpeech dev-clean (calibration) and dev-other (validation). Metrics measured once on LibriSpeech test-clean and test-other with the same pipeline.",
+  "selected_family": "warm_duration_rank0.5_cllr",
+  "trials": {
+    "calibration": 29293,
+    "validation": 31141,
+    "test": 60346
+  },
+  "raw_threshold": 0.5361236333847046,
+  "test_metrics": {
+    "raw_cosine": {
+      "eer_pct": 3.098796937659498,
+      "balanced_accuracy": 0.9545023696682464,
+      "decision": "cosine >= 0.5361 (Val EER threshold)",
+      "Cllr": null,
+      "ece": null
+    },
+    "source_affine": {
+      "eer_pct": 3.098796937659498,
+      "balanced_accuracy": 0.9691578563616479,
+      "Cllr": 0.12135525254538634,
+      "actDCF_p01": 0.45515858549033905,
+      "ece": 0.006346920450555869,
+      "decision": "LLR > 0"
+    },
+    "context_affine": {
+      "eer_pct": 2.5610645278891724,
+      "balanced_accuracy": 0.9737695953335763,
+      "Cllr": 0.09720159154644598,
+      "actDCF_p01": 0.31835581480131236,
+      "ece": 0.014367183496565216,
+      "decision": "LLR > 0"
+    },
+    "sparc": {
+      "eer_pct": 2.5173168064163325,
+      "balanced_accuracy": 0.974006562158221,
+      "Cllr": 0.09575714175469305,
+      "actDCF_p01": 0.3073277433467007,
+      "ece": 0.011630460256189525,
+      "decision": "LLR > 0"
+    }
+  },
+  "reliability": {
+    "source_affine": [
+      {
+        "bin": [
+          0.0,
+          0.1
+        ],
+        "mean_predicted": 0.010376038338265314,
+        "empirical": 0.009881821481869883,
+        "trials": 49145
+      },
+      {
+        "bin": [
+          0.1,
+          0.2
+        ],
+        "mean_predicted": 0.1426106461130043,
+        "empirical": 0.1484431571325127,
+        "trials": 2393
+      },
+      {
+        "bin": [
+          0.2,
+          0.30000000000000004
+        ],
+        "mean_predicted": 0.24554762277196787,
+        "empirical": 0.3003003003003003,
+        "trials": 1215
+      },
+      {
+        "bin": [
+          0.30000000000000004,
+          0.4
+        ],
+        "mean_predicted": 0.34765798108224333,
+        "empirical": 0.37910699241786017,
+        "trials": 782
+      },
+      {
+        "bin": [
+          0.4,
+          0.5
+        ],
+        "mean_predicted": 0.4475027038612611,
+        "empirical": 0.5122950819672131,
+        "trials": 526
+      },
+      {
+        "bin": [
+          0.5,
+          0.6000000000000001
+        ],
+        "mean_predicted": 0.549055163753314,
+        "empirical": 0.6428571428571429,
+        "trials": 413
+      },
+      {
+        "bin": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "mean_predicted": 0.6499017683446906,
+        "empirical": 0.7417582417582418,
+        "trials": 363
+      },
+      {
+        "bin": [
+          0.7000000000000001,
+          0.8
+        ],
+        "mean_predicted": 0.7519415399653261,
+        "empirical": 0.8695652173913043,
+        "trials": 340
+      },
+      {
+        "bin": [
+          0.8,
+          0.9
+        ],
+        "mean_predicted": 0.8538992085773073,
+        "empirical": 0.9506214309707759,
+        "trials": 430
+      },
+      {
+        "bin": [
+          0.9,
+          1.0
+        ],
+        "mean_predicted": 0.9850072777538789,
+        "empirical": 0.9989132982463617,
+        "trials": 4739
+      }
+    ],
+    "context_affine": [
+      {
+        "bin": [
+          0.0,
+          0.1
+        ],
+        "mean_predicted": 0.008944970546479601,
+        "empirical": 0.0024810817516437165,
+        "trials": 48258
+      },
+      {
+        "bin": [
+          0.1,
+          0.2
+        ],
+        "mean_predicted": 0.1421791893099217,
+        "empirical": 0.08373205741626794,
+        "trials": 2319
+      },
+      {
+        "bin": [
+          0.2,
+          0.30000000000000004
+        ],
+        "mean_predicted": 0.2455347489165331,
+        "empirical": 0.18055555555555555,
+        "trials": 1206
+      },
+      {
+        "bin": [
+          0.30000000000000004,
+          0.4
+        ],
+        "mean_predicted": 0.34853192595823945,
+        "empirical": 0.2537593984962406,
+        "trials": 821
+      },
+      {
+        "bin": [
+          0.4,
+          0.5
+        ],
+        "mean_predicted": 0.44702285351696525,
+        "empirical": 0.3125,
+        "trials": 621
+      },
+      {
+        "bin": [
+          0.5,
+          0.6000000000000001
+        ],
+        "mean_predicted": 0.5482328491305709,
+        "empirical": 0.4268292682926829,
+        "trials": 505
+      },
+      {
+        "bin": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "mean_predicted": 0.6506884980762786,
+        "empirical": 0.5369928400954654,
+        "trials": 433
+      },
+      {
+        "bin": [
+          0.7000000000000001,
+          0.8
+        ],
+        "mean_predicted": 0.7521436754355222,
+        "empirical": 0.7108626198083067,
+        "trials": 451
+      },
+      {
+        "bin": [
+          0.8,
+          0.9
+        ],
+        "mean_predicted": 0.8520822803302999,
+        "empirical": 0.8192771084337349,
+        "trials": 436
+      },
+      {
+        "bin": [
+          0.9,
+          1.0
+        ],
+        "mean_predicted": 0.9886563160924553,
+        "empirical": 0.9955213325999843,
+        "trials": 5296
+      }
+    ],
+    "sparc": [
+      {
+        "bin": [
+          0.0,
+          0.1
+        ],
+        "mean_predicted": 0.008345912998063311,
+        "empirical": 0.002662570404505889,
+        "trials": 48708
+      },
+      {
+        "bin": [
+          0.1,
+          0.2
+        ],
+        "mean_predicted": 0.142791463779675,
+        "empirical": 0.12123745819397992,
+        "trials": 2131
+      },
+      {
+        "bin": [
+          0.2,
+          0.30000000000000004
+        ],
+        "mean_predicted": 0.24569563041327422,
+        "empirical": 0.20771513353115725,
+        "trials": 1096
+      },
+      {
+        "bin": [
+          0.30000000000000004,
+          0.4
+        ],
+        "mean_predicted": 0.34665760984295724,
+        "empirical": 0.22727272727272727,
+        "trials": 770
+      },
+      {
+        "bin": [
+          0.4,
+          0.5
+        ],
+        "mean_predicted": 0.4460907185670086,
+        "empirical": 0.3018867924528302,
+        "trials": 579
+      },
+      {
+        "bin": [
+          0.5,
+          0.6000000000000001
+        ],
+        "mean_predicted": 0.5486713505820219,
+        "empirical": 0.45169385194479295,
+        "trials": 473
+      },
+      {
+        "bin": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "mean_predicted": 0.6487298134044398,
+        "empirical": 0.548926014319809,
+        "trials": 424
+      },
+      {
+        "bin": [
+          0.7000000000000001,
+          0.8
+        ],
+        "mean_predicted": 0.7523203643289238,
+        "empirical": 0.6921675774134791,
+        "trials": 414
+      },
+      {
+        "bin": [
+          0.8,
+          0.9
+        ],
+        "mean_predicted": 0.8509534188261588,
+        "empirical": 0.8097686375321336,
+        "trials": 422
+      },
+      {
+        "bin": [
+          0.9,
+          1.0
+        ],
+        "mean_predicted": 0.9893191214045384,
+        "empirical": 0.9952448975598301,
+        "trials": 5329
+      }
+    ]
+  },
+  "browser_int8_lid_check": {
+    "trials": 200,
+    "sparc_llr_abs_diff_median": 0.012852196842654262,
+    "sparc_llr_abs_diff_max": 0.17357070846789835,
+    "decision_flips": 0
+  },
+  "example_draw": "2 same-speaker and 2 different-speaker test trials drawn at random (seed 2026) among trials with both utterances 3-12 s; correctness was not used.",
+  "examples": [
+    {
+      "a": "1580-141083-0006.flac",
+      "b": "1580-141084-0019.flac",
+      "same": true,
+      "reference_browser_pipeline": {
+        "cosine": 0.6895670890808105,
+        "context": [
+          3.125,
+          0.28801843317972353,
+          0.565685424949238,
+          10.85,
+          3.125,
+          10.85,
+          7.725,
+          9.784,
+          2.62,
+          2.62,
+          9.784,
+          7.164000000000001,
+          0.8939105868339539,
+          0.037196990102529526,
+          0.9037562608718872
+        ],
+        "affine": 1.6251250234555905,
+        "sparc": 2.935785155057621
+      }
+    },
+    {
+      "a": "61-70970-0004.flac",
+      "b": "61-70968-0060.flac",
+      "same": true,
+      "reference_browser_pipeline": {
+        "cosine": 0.7391070127487183,
+        "context": [
+          3.735,
+          0.35520684736091296,
+          0.5174336838042219,
+          10.515,
+          3.735,
+          10.515,
+          6.780000000000001,
+          9.82,
+          3.164,
+          3.164,
+          9.82,
+          6.656000000000001,
+          0.969602644443512,
+          0.010446076281368732,
+          0.8781172037124634
+        ],
+        "affine": 2.6964567775320885,
+        "sparc": 2.6868386380686253
+      }
+    },
+    {
+      "a": "1580-141083-0006.flac",
+      "b": "8555-284447-0019.flac",
+      "same": false,
+      "reference_browser_pipeline": {
+        "cosine": 0.5220454335212708,
+        "context": [
+          10.28,
+          0.9474654377880184,
+          0.3118914307759027,
+          10.85,
+          10.28,
+          10.85,
+          0.5700000000000003,
+          9.784,
+          9.692,
+          9.692,
+          9.784,
+          0.09200000000000053,
+          0.9991916418075562,
+          2.4993714760057628e-05,
+          0.9384722709655762
+        ],
+        "affine": -1.9976352839581126,
+        "sparc": -6.596420688341573
+      }
+    },
+    {
+      "a": "1580-141083-0006.flac",
+      "b": "2830-3980-0069.flac",
+      "same": false,
+      "reference_browser_pipeline": {
+        "cosine": 0.35260188579559326,
+        "context": [
+          5.5550625,
+          0.5119873271889401,
+          0.42428289668322366,
+          10.85,
+          5.5550625,
+          10.85,
+          5.2949375,
+          9.784,
+          4.9090625,
+          4.9090625,
+          9.784,
+          4.874937500000001,
+          0.999512255191803,
+          0.00015061863814480603,
+          0.8921892642974854
+        ],
+        "affine": -5.661957708408908,
+        "sparc": -8.042318103869807
+      }
+    }
+  ],
+  "models": {
+    "campplus.onnx": {
+      "bytes": 16399064,
+      "sha256": "56e9d7ddc5893b98e7f5234a3cec8ed5d181e9d81f1137e62405e5010029e727"
+    },
+    "lid.onnx": {
+      "bytes": 23268403,
+      "sha256": "2c5c02757fa47dc729d7bb2bf4329c7f909a4d16dd346b642c7d0a18c1abc706"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    }
+  }
+}
