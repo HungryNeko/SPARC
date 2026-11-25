@@ -1,6 +1,7 @@
 # Fitting and deployment
 
-The published backend uses the unbounded anchored residual algorithm:
+The published backend uses the Anchored Residual Calibration (ARCal) algorithm with an
+unbounded residual:
 
 ```text
 source_llr  = source_affine(frozen_scores)

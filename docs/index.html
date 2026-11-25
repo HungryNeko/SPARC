@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SPARC — Anchored Residual Calibration for Speaker Verification</title>
-<meta name="description" content="SPARC calibrates frozen speaker-verification scores with automatic duration, VAD and language context, using a small residual around a frozen context-affine anchor.">
+<title>SPARCal — Anchored Residual Calibration for Speaker Verification</title>
+<meta name="description" content="SPARCal calibrates frozen speaker-verification scores with automatic duration, VAD and language context, using a small residual around a frozen context-affine anchor.">
 <meta name="color-scheme" content="light">
 <script>document.documentElement.classList.add("js")</script>
 <style>
@@ -146,7 +146,7 @@ td.win{color:var(--green);font-weight:600}
 <body>
 
 <nav class="nav"><div class="wrap">
-  <span class="brand">SPARC</span>
+  <span class="brand">SPARCal</span>
   <ul>
     <li><a href="#results">Results</a></li>
     <li><a href="#how">How it works</a></li>
@@ -162,9 +162,9 @@ td.win{color:var(--green);font-weight:600}
     <div class="hero-inner">
     <div class="inst"><img src="assets/usc.svg" alt="University of Southern California" onerror="this.remove()"><span class="rule"></span><span class="sail">SAIL</span></div>
     <p class="eyebrow">Speaker verification calibration</p>
-    <h1>SPARC</h1>
+    <h1>SPARCal</h1>
     <p class="hero-sub">Frozen encoders. Calibrated scores.</p>
-    <p class="hero-copy">A small residual on top of a frozen context-affine anchor turns speaker-verification scores into calibrated log-likelihood ratios, using duration, voice-activity and language context.</p>
+    <p class="hero-copy">Anchored Residual Calibration (ARCal) places a small residual on top of a frozen context-affine anchor to turn speaker-verification scores into calibrated log-likelihood ratios, using duration, voice-activity and language context.</p>
     <div class="byline">
       <div class="authors"><span>Shi He<sup>a,1</sup></span><span>Xin Wei<sup>a,1,∗</sup></span><span>Huang-Cheng Chou<sup>b</sup></span><span>Sudarsana Reddy Kadiri<sup>b</sup></span><span>Shrikanth Narayanan<sup>b</sup></span></div>
     </div>
@@ -214,7 +214,7 @@ td.win{color:var(--green);font-weight:600}
 
     <div class="spec rv">
       <table>
-        <thead><tr><th>Test C<sub>llr</sub><span class="long"> · lower is better</span></th><th><span class="long">Context affine</span><span class="short">Baseline</span></th><th>SPARC</th><th>Change</th></tr></thead>
+        <thead><tr><th>Test C<sub>llr</sub><span class="long"> · lower is better</span></th><th><span class="long">Context affine</span><span class="short">Baseline</span></th><th>SPARCal</th><th>Change</th></tr></thead>
         <tbody>
           <tr><td class="corp">TidyVoice <span class="sub">single</span></td><td>0.2518</td><td>0.2468</td><td class="win">−2.0%</td></tr>
           <tr><td class="corp">TidyVoice <span class="sub">fusion</span></td><td>0.0926</td><td>0.0861</td><td class="win">−7.0%</td></tr>
@@ -226,7 +226,7 @@ td.win{color:var(--green);font-weight:600}
           <tr><td class="corp">VoxCeleb2 <span class="sub">fusion</span></td><td>0.0644</td><td>0.0627</td><td class="win">−2.6%</td></tr>
         </tbody>
       </table>
-      <p class="tnote">Single is the mean of six single-encoder conditions. SPARC values average the selected family's seeds.<sup><a href="#fn1">1</a></sup></p>
+      <p class="tnote">Single is the mean of six single-encoder conditions. SPARCal values average the selected family's seeds.<sup><a href="#fn1">1</a></sup></p>
     </div>
   </div>
 </section>
@@ -235,7 +235,7 @@ td.win{color:var(--green);font-weight:600}
 <section class="band center" id="how">
   <div class="wrap">
     <h2 class="rv">Anchor first.<br>Then correct.</h2>
-    <p class="lede rv">SPARC learns only what a strong affine reference misses — and keeps the reference when a correction does not help.</p>
+    <p class="lede rv">SPARCal learns only what a strong affine reference misses — and keeps the reference when a correction does not help.</p>
     <div class="steps">
       <div class="rv" style="--i:0"><div class="num">1 · Fit</div><h3>A frozen anchor.</h3><p>A source-affine map and a context-affine anchor are fitted on labeled calibration data, then frozen. Every residual starts at zero.</p></div>
       <div class="rv" style="--i:1"><div class="num">2 · Select</div><h3>Earned capacity.</h3><p>Validation chooses among 17 families — the anchor itself, 8 polynomial and 8 small neural residuals — only if C<sub>llr</sub> and EER do not get worse.</p></div>
@@ -276,11 +276,11 @@ llr = Plugin.load("sparc.json").predict(scores, context, names, context_names=Q_
     </div>
     <ol>
       <li id="fn1">Held-out Test trials of TidyVoice, NISP, LibriSpeech and VoxCeleb2. Each corpus is calibrated on its own labeled calibration split and selected on its own validation split; Test is used only to evaluate fixed models. Five of the eight panel improvements hold under the specified multiplicity adjustment. C<sub>llr</sub> is the log-likelihood-ratio cost.</li>
-      <li id="fn2">Variance-Gamma is a duration-dependent generative calibrator. It achieves lower cost than SPARC on several other panels and fixed decision thresholds; SPARC is not best on every metric.</li>
+      <li id="fn2">Variance-Gamma is a duration-dependent generative calibrator. It achieves lower cost than SPARCal on several other panels and fixed decision thresholds; SPARCal is not best on every metric.</li>
       <li id="fn3">Exploratory analyses of the fusion conditions. Context errors were simulated at inference time on fixed models.</li>
       <li id="fn4">0.46 s versus 0.74 s per million trials with precomputed inputs. Timings exclude speaker-embedding, VAD and language-ID extraction. Results do not establish transfer to unseen domains.</li>
     </ol>
-    <div class="end"><span>SPARC · Portable Anchored Residual Calibration Plug-in for Speaker Verification · He, Wei, Chou, Kadiri, Narayanan · University of Southern California · manuscript in preparation</span><a href="https://github.com/HungryNeko/SPARC">GitHub</a></div>
+    <div class="end"><span>SPARCal · Portable Anchored Residual Calibration Plug-in for Speaker Verification · He, Wei, Chou, Kadiri, Narayanan · University of Southern California · manuscript in preparation</span><a href="https://github.com/HungryNeko/SPARC">GitHub</a></div>
   </div>
 </footer>
 

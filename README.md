@@ -1,10 +1,10 @@
-# SPARC
+# SPARCal
 
 **Portable Anchored Residual Calibration Plug-in for Speaker Verification**
 
-SPARC calibrates scores from frozen speaker encoders using duration, voice activity,
-and soft language context. The backend fits a source-affine model, a context-affine
-anchor, and a validation-selected unbounded residual correction. It returns one
+SPARCal calibrates scores from frozen speaker encoders using duration, voice activity,
+and soft language context. Its core algorithm, Anchored Residual Calibration (ARCal), fits a source-affine
+model, a context-affine anchor, and a validation-selected unbounded residual correction. It returns one
 calibrated log-likelihood ratio (LLR) per trial.
 
 Project page: <https://hungryneko.github.io/SPARC/> (source: [`docs/index.html`](docs/index.html)).
@@ -106,7 +106,7 @@ language-identification output is unavailable, use the explicit
 
 ## Relation to the paper
 
-This code accompanies *SPARC: Portable Anchored Residual Calibration Plug-in for
+This code accompanies *SPARCal: Portable Anchored Residual Calibration Plug-in for
 Speaker Verification* (manuscript in preparation). The bundle format written by
 `Plugin.fit` is the same format used for the study's saved models. The study's 72
 saved bundles load with this `delivery` package; on CPU their predictions are

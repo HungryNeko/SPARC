@@ -1,5 +1,5 @@
 {
-  "description": "Demo calibration for this page: CAMPPlus + automatic VAD and language context, fitted with the SPARC delivery code on LibriSpeech dev-clean (calibration) and dev-other (validation). Metrics measured once on LibriSpeech test-clean and test-other with the same pipeline.",
+  "description": "Demo calibration for this page: CAMPPlus + automatic VAD and language context, fitted with the SPARCal delivery code on LibriSpeech dev-clean (calibration) and dev-other (validation). Metrics measured once on LibriSpeech test-clean and test-other with the same pipeline.",
   "selected_family": "warm_duration_rank0.5_cllr",
   "trials": {
     "calibration": 29293,

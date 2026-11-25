@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SPARC — Try it in your browser</title>
-<meta name="description" content="Compare two recordings in your browser: a small speaker model, voice-activity and language context, and SPARC calibration. Audio never leaves your device.">
+<title>SPARCal — Try it in your browser</title>
+<meta name="description" content="Compare two recordings in your browser: a small speaker model, voice-activity and language context, and SPARCal calibration. Audio never leaves your device.">
 <meta name="color-scheme" content="light">
 <style>
 :root{--ink:#1d1d1f;--ink2:#424245;--rule:#d2d2d7;--gray:#f5f5f7;--blue:#0066cc;--green:#248a3d;--red:#c9342d;
@@ -122,7 +122,7 @@ footer{background:var(--gray);padding:26px 0 40px;font-size:13px;color:var(--ink
 </style>
 </head>
 <body>
-<nav class="nav"><div class="wrap"><span class="brand">SPARC</span><a class="back" href="./">Overview</a></div></nav>
+<nav class="nav"><div class="wrap"><span class="brand">SPARCal</span><a class="back" href="./">Overview</a></div></nav>
 
 <header class="wrap">
   <div class="inst"><img src="assets/usc.svg" alt="University of Southern California" onerror="this.remove()"><span class="rule"></span><span class="sail">SAIL</span></div>
@@ -141,7 +141,7 @@ footer{background:var(--gray);padding:26px 0 40px;font-size:13px;color:var(--ink
       <div class="cols3">
         <div class="col" id="col-raw"><div class="clabel">Raw similarity score</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0 · unlike</span><span>100 · identical</span></div><div class="cnote">How alike the two voices sound. Not a probability.</div></div>
         <div class="col" id="col-affine"><div class="clabel">Affine calibration</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0% · surely different</span><span>100% · surely same</span></div><div class="cnote">Chance of the same speaker, from the score alone.</div></div>
-        <div class="col sparc" id="col-sparc"><div class="clabel">SPARC</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0% · surely different</span><span>100% · surely same</span></div><div class="cnote">The same chance, also using duration, speech and language context.</div></div>
+        <div class="col sparc" id="col-sparc"><div class="clabel">SPARCal</div><div class="cnum">–</div><div class="cverdict"></div><div class="cbadge"></div><div class="cbar"><i></i><b></b></div><div class="scale"><span>0% · surely different</span><span>100% · surely same</span></div><div class="cnote">The same chance, also using duration, speech and language context.</div></div>
       </div>
       <div id="delta"></div>
       <div id="ctx"></div>
@@ -173,7 +173,7 @@ footer{background:var(--gray);padding:26px 0 40px;font-size:13px;color:var(--ink
         <thead><tr><th>Setting</th><th>Accuracy</th><th>EER</th><th>C<sub>llr</sub></th><th>Calibration error</th></tr></thead>
         <tbody></tbody>
       </table>
-      <p class="tnote">Measured once on <span id="ntest"></span> held-out LibriSpeech test trials with this pipeline. The language model was run at full precision for the table; the 8-bit version used in your browser changed SPARC log-likelihood ratios by a median of 0.013 and changed no decisions on 200 checked trials. Accuracy weights same- and different-speaker trials equally. C<sub>llr</sub> and calibration error need probabilities, so they do not apply to the raw score. Lower is better for EER, C<sub>llr</sub> and calibration error.</p>
+      <p class="tnote">Measured once on <span id="ntest"></span> held-out LibriSpeech test trials with this pipeline. The language model was run at full precision for the table; the 8-bit version used in your browser changed SPARCal log-likelihood ratios by a median of 0.013 and changed no decisions on 200 checked trials. Accuracy weights same- and different-speaker trials equally. C<sub>llr</sub> and calibration error need probabilities, so they do not apply to the raw score. Lower is better for EER, C<sub>llr</sub> and calibration error.</p>
     </div>
     <ul class="notes">
       <li>The examples are LibriSpeech test pairs drawn at random, two from the same speaker and two from different speakers; they were not chosen for being easy.</li>
@@ -191,7 +191,7 @@ footer{background:var(--gray);padding:26px 0 40px;font-size:13px;color:var(--ink
       </div>
       <p class="bnote"><sup>1</sup>Joint first authors, equal contribution &nbsp;·&nbsp; <sup>∗</sup>Corresponding author</p>
     </div>
-    SPARC · He, Wei, Chou, Kadiri, Narayanan · University of Southern California · demo calibration fitted for this page, not a study model · <a href="./">Overview</a></div></footer>
+    SPARCal · He, Wei, Chou, Kadiri, Narayanan · University of Southern California · demo calibration fitted for this page, not a study model · <a href="./">Overview</a></div></footer>
 
 <script src="demo/vendor/ort/ort.wasm.min.js"></script>
 <script src="demo/sparc-demo.js"></script>

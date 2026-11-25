@@ -1,4 +1,4 @@
-/* SPARC browser demo: VAD + CAMPPlus + VoxLingua107 LID in ONNX Runtime Web, then SPARC calibration.
+/* SPARCal browser demo: VAD + CAMPPlus + VoxLingua107 LID in ONNX Runtime Web, then SPARCal calibration.
    Mirrors the Python reference pipeline exactly (see README in this folder). Audio never leaves the browser. */
 (function () {
   "use strict";
@@ -18,7 +18,7 @@
     $("loadbar").style.width = (100 * f).toFixed(1) + "%";
     $("loadtext").textContent = stage === 1
       ? "Downloading the speaker model — " + mb(got) + " of " + mb(tot) + " MB"
-      : "Speaker model ready. Downloading the language model for SPARC — " + mb(got) + " of " + mb(tot) + " MB";
+      : "Speaker model ready. Downloading the language model for SPARCal — " + mb(got) + " of " + mb(tot) + " MB";
   }
   async function fetchWithProgress(url, key, stage, expected) {
     const res = await fetch(url);
@@ -113,7 +113,7 @@
       dot(A.lid.probs, B.lid.probs), jensenShannon(A.lid.probs, B.lid.probs), dot(A.lid.emb, B.lid.emb)];
   }
 
-  /* ---------- SPARC bundle (delivery.plugin.Plugin.predict) ---------- */
+  /* ---------- SPARCal bundle (delivery.plugin.Plugin.predict) ---------- */
   function sourceLLR(b, s) { const S = b.source_affine; let v = S.bias; for (let k = 0; k < s.length; k++) v += ((s[k] - S.mean[k]) / S.scale[k]) * S.weights[k]; return v; }
   function contextLLR(b, s, q) {
     const base = sourceLLR(b, s), C = b.context_affine;
@@ -197,15 +197,15 @@
     const pAff = 1 / (1 + Math.exp(-out.affine));
     fillCol("affine", pct(pAff), verdict(out.affine > 0), out.affine > 0, pAff, 0.5, NOTE.affine, okOf(out.affine > 0));
     if (out.sparc === null) {
-      fillCol("sparc", "…", "Loading language model", null, 0, 0.5, "SPARC appears as soon as the language model has loaded.", null);
+      fillCol("sparc", "…", "Loading language model", null, 0, 0.5, "SPARCal appears as soon as the language model has loaded.", null);
       $("delta").textContent = "";
     } else {
       const pS = 1 / (1 + Math.exp(-out.sparc)), d = out.sparc - out.affine, sameNow = out.sparc > 0;
       fillCol("sparc", pct(pS), verdict(sameNow), sameNow, pS, 0.5, NOTE.sparc, okOf(sameNow));
       const who = sameNow ? "the same speaker" : "different speakers", surer = sameNow ? d > 0 : d < 0;
-      $("delta").innerHTML = "Chance of the same speaker: " + pct(pAff) + " with affine calibration → " + pct(pS) + " with SPARC · " +
+      $("delta").innerHTML = "Chance of the same speaker: " + pct(pAff) + " with affine calibration → " + pct(pS) + " with SPARCal · " +
         '<span class="' + (Math.abs(d) < 0.05 ? "" : surer ? "up" : "down") + '">' +
-        (Math.abs(d) < 0.05 ? "about equally sure" : surer ? "SPARC is more sure they are " + who : "SPARC is less sure they are " + who) + "</span>";
+        (Math.abs(d) < 0.05 ? "about equally sure" : surer ? "SPARCal is more sure they are " + who : "SPARCal is less sure they are " + who) + "</span>";
     }
     let ctx = "Speech " + out.q[7].toFixed(1) + " s / " + out.q[8].toFixed(1) + " s";
     if (out.sparc !== null) ctx += " · language similarity " + (100 * out.q[12]).toFixed(0) + "% · detected " + out.langs.map((l) => l.split(": ")[1]).join(" / ");
@@ -269,7 +269,7 @@
   }
 
   function metricsTable() {
-    const m = state.evaluation.test_metrics, rows = [["raw", "Raw cosine", m.raw_cosine], ["affine", "Affine calibration", m.source_affine], ["sparc", "SPARC", m.sparc]];
+    const m = state.evaluation.test_metrics, rows = [["raw", "Raw cosine", m.raw_cosine], ["affine", "Affine calibration", m.source_affine], ["sparc", "SPARCal", m.sparc]];
     $("metrics").querySelector("tbody").innerHTML = rows.map(([k, label, r]) =>
       `<tr data-mode="${k}"><td>${label}</td><td>${(100 * r.balanced_accuracy).toFixed(2)}%</td><td>${r.eer_pct.toFixed(2)}%</td>` +
       `<td>${r.Cllr === null ? "—" : r.Cllr.toFixed(3)}</td><td>${r.ece === null ? "—" : (100 * r.ece).toFixed(2) + "%"}</td></tr>`).join("");
@@ -308,7 +308,7 @@
     await state.ready1;
     showLoad(2);
     state.ready2 = loadSession("lid", 2).then(() => {
-      $("loadbar").style.width = "100%"; $("loadtext").textContent = "All models ready — SPARC is available.";
+      $("loadbar").style.width = "100%"; $("loadtext").textContent = "All models ready — SPARCal is available.";
       setTimeout(() => $("loader").classList.add("done"), 2000);
       state.slots.forEach((r) => { if (r) delete r.lid; });
       if (state.result) compare(state.result.truth, state.result.title);
